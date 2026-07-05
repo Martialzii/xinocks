@@ -67,6 +67,9 @@ STATIC_URL = 'static/'
 
 PAYPAL_RECEIVER_EMAIL = env('PAYPAL_RECEIVER_EMAIL', default='cyrussifa@gmail.com')
 PAYPAL_TEST_MODE = env.bool('PAYPAL_TEST_MODE', default=True)
+PAYPAL_CLIENT_ID = env('PAYPAL_CLIENT_ID', default='')
+PAYPAL_CLIENT_SECRET = env('PAYPAL_CLIENT_SECRET', default='')
+PAYPAL_API_BASE_URL = env('PAYPAL_API_BASE_URL', default='https://api-m.sandbox.paypal.com')
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'market:product_list'
