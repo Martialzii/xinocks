@@ -10,6 +10,7 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
+from django.contrib.auth.models import User
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 
@@ -33,6 +34,8 @@ def product_detail(request, id, slug):
 @login_required
 def subscription_checkout(request):
     plan = SubscriptionPlan.objects.first() or SubscriptionPlan.objects.create()
+    request.session['pending_premium_user_id'] = request.user.id
+    request.session.modified = True
     context = {
         'plan': plan,
         'paypal_email': settings.PAYPAL_RECEIVER_EMAIL,
@@ -43,10 +46,23 @@ def subscription_checkout(request):
 
 
 def payment_success(request):
+    user = None
     if request.user.is_authenticated:
-        profile, created = UserProfile.objects.get_or_create(user=request.user)
+        user = request.user
+    else:
+        pending_user_id = request.session.get('pending_premium_user_id')
+        if pending_user_id:
+            try:
+                user = get_object_or_404(User, id=pending_user_id)
+            except Exception:
+                user = None
+
+    if user is not None:
+        profile, created = UserProfile.objects.get_or_create(user=user)
         profile.is_premium = True
         profile.save()
+        request.session.pop('pending_premium_user_id', None)
+
     return render(request, 'market/success.html')
 
 
