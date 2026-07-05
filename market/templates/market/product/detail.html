@@ -1,0 +1,13 @@
+{% extends 'market/base.html' %}
+
+{% block content %}
+<h1>{{ product.name }}</h1>
+<p><strong>Category:</strong> {{ product.category.name }}</p>
+<p><strong>Price:</strong> ${{ product.price }}</p>
+<p><strong>Stock:</strong> {{ product.stock }}</p>
+{% if product.image %}
+    <img src="{{ product.image }}" alt="{{ product.name }}" style="max-width: 300px;">
+{% endif %}
+<p>{{ product.description }}</p>
+<a href="{% url 'market:product_list' %}">Back to store</a>
+{% endblock %}

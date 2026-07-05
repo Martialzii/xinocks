@@ -1,0 +1,29 @@
+{% extends 'market/base.html' %}
+
+{% block content %}
+<h1>Xinocks Marketplace</h1>
+<p>Browse available products and upgrade to premium access.</p>
+
+{% if categories %}
+    <h2>Categories</h2>
+    <ul>
+        {% for category in categories %}
+            <li>{{ category.name }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+<h2>Products</h2>
+{% if products %}
+    <ul>
+        {% for product in products %}
+            <li>
+                <a href="{% url 'market:product_detail' product.id product.slug %}">{{ product.name }}</a>
+                — ${{ product.price }}
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No products are available right now.</p>
+{% endif %}
+{% endblock %}

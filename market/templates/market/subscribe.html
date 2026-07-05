@@ -1,0 +1,31 @@
+{% extends 'market/base.html' %}
+
+{% block content %}
+<h1>Premium Access</h1>
+<p>Unlock premium content for ${{ plan.price }} per month.</p>
+<p>Receiver email: {{ paypal_email }}</p>
+<p>Sandbox mode: {{ sandbox_mode }}</p>
+
+<div id="paypal-button-container"></div>
+
+<script src="https://www.paypal.com/sdk/js?client-id=sb&currency=USD"></script>
+<script>
+    if (window.paypal) {
+        window.paypal.Buttons({
+            createOrder: function() {
+                return fetch('{% url "market:create_paypal_order" %}', {
+                    method: 'POST',
+                    headers: {'X-Requested-With': 'XMLHttpRequest'}
+                }).then(function(res) {
+                    return res.json();
+                }).then(function(data) {
+                    return data.order_id || 'demo-order';
+                });
+            },
+            onApprove: function() {
+                window.location.href = '{% url "market:payment_success" %}';
+            }
+        }).render('#paypal-button-container');
+    }
+</script>
+{% endblock %}

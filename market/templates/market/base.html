@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Xinocks Marketplace</title>
+</head>
+<body>
+    <nav>
+        <a href="{% url 'market:product_list' %}">Store</a>
+        {% if user.is_authenticated %}
+            <span> | Hello, {{ user.username }}</span>
+            <a href="{% url 'market:subscription_checkout' %}"> | Go Premium</a>
+            <a href="{% url 'market:logout' %}"> | Logout</a>
+        {% else %}
+            <a href="{% url 'market:login' %}"> | Login</a>
+            <a href="{% url 'market:signup' %}"> | Sign up</a>
+        {% endif %}
+    </nav>
+    <hr>
+    {% block content %}{% endblock %}
+</body>
+</html>
