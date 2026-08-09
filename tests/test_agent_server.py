@@ -1,6 +1,6 @@
 import unittest
 
-from agent_server import build_branch_plan_payload, build_health_payload
+from agent_server import build_agent_prompt, build_branch_plan_payload, build_health_payload
 
 
 class AgentServerTests(unittest.TestCase):
@@ -31,6 +31,13 @@ class AgentServerTests(unittest.TestCase):
         self.assertEqual(payload["agi_build_feature"]["feature_grade"], "advanced")
         self.assertIn("tokenization_response", payload)
         self.assertTrue(payload["tokenization_response"]["when_needed"])
+
+    def test_agent_prompt_includes_the_requested_behaviour(self):
+        prompt = build_agent_prompt()
+        self.assertIn("market pressure", prompt.lower())
+        self.assertIn("guided", prompt.lower())
+        self.assertIn("reasoning", prompt.lower())
+        self.assertIn("task management", prompt.lower())
 
 
 if __name__ == "__main__":

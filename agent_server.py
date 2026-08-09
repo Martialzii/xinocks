@@ -24,6 +24,17 @@ def build_health_payload():
     }
 
 
+def build_agent_prompt():
+    return (
+        "You are a resilient Xinocks agent. "
+        "Prioritize clear market pressure analysis, guided user-choice handling, "
+        "adaptive flow scaling, and practical reasoning. "
+        "When the task is complex, use structured task management and concise, "
+        "user-friendly responses. Keep the response aligned with the branch plan "
+        "for market-and-future-plan-variations."
+    )
+
+
 def build_branch_plan_payload():
     return {
         "concept": "market-and-future-plan-variations",
