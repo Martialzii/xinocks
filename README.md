@@ -22,7 +22,7 @@ Xinocks Marketplace is a Django-based storefront with product browsing, user reg
 1. Create and activate a virtual environment (optional but recommended)
 2. Install dependencies:
    ```bash
-   pip install -r requirements.txt
+   .venv\\Scripts\\python.exe -m pip install -r requirements.txt
    ```
 3. Create a `.env` file in the project root with at least:
    ```env
@@ -34,22 +34,45 @@ Xinocks Marketplace is a Django-based storefront with product browsing, user reg
    ```
 4. Apply migrations:
    ```bash
-   python manage.py migrate
+   .venv\\Scripts\\python.exe manage.py migrate
    ```
 5. Run the development server:
    ```bash
-   python manage.py runserver
+   .venv\\Scripts\\python.exe manage.py runserver
    ```
+
+## Foundry Toolkit Agent Inspector
+
+The project now includes a lightweight HTTP agent server for the inspector workflow.
+
+- Start it directly:
+  ```bash
+  .venv\\Scripts\\python.exe agent_server.py
+  ```
+- Or use the launcher shim:
+  ```bash
+  agentdev.cmd run
+  ```
+- VS Code debug entrypoints are available under [.vscode/launch.json](.vscode/launch.json) and [.vscode/tasks.json](.vscode/tasks.json).
+
+Health check:
+```bash
+curl http://127.0.0.1:8010/health
+```
 
 ## Admin Access
 
 Create a superuser with:
 
 ```bash
-python manage.py createsuperuser
+.venv\\Scripts\\python.exe manage.py createsuperuser
 ```
 
 ## Notes
 
 - The PayPal integration is configured for sandbox testing by default.
 - Keep `.env` out of version control.
+
+## Martialzii Enterprise Integration
+
+This merge also brings in the enterprise suite assets from the remote repository, including the guardian, storm, and key generation utilities.
